@@ -1,0 +1,36 @@
+deploy:
+  on:
+    condition: $TOXENV == py27
+    repo: power-system-simulation-toolbox/psst
+    tags: true
+  distributions: sdist bdist_wheel
+  password:
+    secure: Au9Jx9NwPeFmkpuoLTttLgq3Yy2vaszFQhE08Dyoc7apmXpn276mqX82YLWxe5SoXwfnTVZqJ1UyLtVdrj7M1YpIbEEMSoFle2fRWWNWi4HRqnDlQuWIoKUddjm2Ft2ef/Emzyo2GdRV7LN0MJQQPOknG27X26Y27OzDrYUX4j/bf9z2lcilfNBh5cFLdRsTfq4M8Rhnkfo9JxDapWWewfVRRpSHpYmOfcDp1UR22NRCJjGi+hbvJPZzaO+3XMlocbXNVpWcWiKdpriskmk0N7I4FO6prBeRywwPqQ6x2v9L3UIp95+o2BUBn16TjR9ppw6bYDiab8wm7PXJraQKJrPTq3eCQNPc4sItIZgQW+FcwxK7Zpz42Fkz6kSZnyKdljne+gsceSs8z1KjyNh2OehvUaCkljMwdlJmeIhOHeBIMsiJVKUP8vU5f0PGJjXVok7K3hDeLF3Qe27SbJ627UYXCLch5AqVbfBdFqf4ksneclBeFN41t9eKctDGWL7CPzwXikeBva3yDZBFzWoQNiVeZ6blD3SJSUY3McWCEjNs5LOYxssWd+K/dt0Nbdr0/HmneRyWk/YH8R15NuNGTLQjNDiaRAI4UeE6x3gJ6HFRDsOE7szQgU2zo4xX9bz5oV8bh9idDx9DHsmJS+86T7HUwCtBfvV0skg46/JoIXk=
+  provider: pypi
+  user: kdheepak89
+env:
+  matrix:
+  - TOXENV=py35
+  - TOXENV=py27
+  global:
+    secure: CET1n2mbBTAayaX2zHlZX+V8MEe3ykPIXaF+nJeK950Ka//ZV+VHDMk4uaX7QKx4t2kLdq8xbM5L8dN0Op1mVHwhlAHHzyhI2CQiduYCPT+ugTsFOjBuaaaUZsQpRh+2uFWti9W5tdvZ8o/hswPOvObHlvXlErh92Up79TwfGVWtIzH/7wO91tBW0xiXY6/BHi5/fOlt0wSy7TYXZjMw3XMsGXYVEzDv7IY6bw3H9B/B+ynG2fpks20rpn1qP32U7KpkzU4ACPsReL0iyxUWKCDEISwcB9Qa0I2ycNwW9VZ86IbJuSv27rRehSm8e+HIykje4CLib7JVFKR/0RSK2mM851Hb7JLaql9h/3RH0hhpuUaCJL0V4LrCgfgyJh9fkdCGtwzbQOh6+X1Zk6DvkuRih1V2sflpZ2H4UWW/GsDdlAcrMlj+yKtvQiQluHmtfIuwAMYfKtk3lYpkUpFp75dveblF9adoY1H1djSdeP4i0CCsiCmHT/Be8BVw5mpq4Nqs4/rPi/yyBwa4A6rtc7+aAFSiiXZwvqxT/elZlDJZS2kGm1vA5TNydgTTH3T3jMhL69Oe22KQtC82UTsbg6bfCr1yebuMzlQ44Cyfhe6KbquXj685Ej2SkQLoooj/gdwp7w6nytjhKWaVN07PZGf9rrEZUBMmzyVL+3V77Ag=
+install:
+    - pip install ghp-import>=0.4.1
+    - pip install -U tox
+    - pip install -e .
+language: python
+python: 3.5
+before_install:
+    - git config --global user.name "Travis-CI"
+    - git config --global user.email "noreply@travis-ci.org"
+script:
+- tox -e ${TOXENV}
+- make deploydocs
+notifications:
+  email: false
+branches:
+  only:
+  - master
+cache:
+  directories:
+  - $HOME/.cache/pip
