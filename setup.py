@@ -23,7 +23,7 @@ test_requirements = [
 
 setup(
     name='psst',
-    version='0.1.0',
+    version='0.0.1a',
     description="Power System Simulation Toolbox",
     long_description=readme + '\n\n' + history,
     author="Dheepak Krishnamurthy",
