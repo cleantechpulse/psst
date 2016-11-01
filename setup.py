@@ -6,9 +6,6 @@ from setuptools import setup
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
-
 requirements = [
     'Click>=6.0',
     'sphinx>=1.4.1',
@@ -25,7 +22,7 @@ setup(
     name='psst',
     version='0.0.1a',
     description="Power System Simulation Toolbox",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     author="Dheepak Krishnamurthy",
     author_email='kdheepak89@gmail.com',
     url='https://github.com/power-system-simulation-toolbox/psst',
