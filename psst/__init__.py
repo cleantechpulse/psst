@@ -2,6 +2,5 @@
 
 __author__ = 'Dheepak Krishnamurthy'
 __email__ = 'kdheepak89@gmail.com'
-__version__ = '0.0.1'
+__version__ = '0.1.1a'
 
-print("This version is outdated. Please contact the developer for more information.")
