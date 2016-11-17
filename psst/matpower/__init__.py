@@ -11,7 +11,7 @@ import os
 import pandas as pd
 
 from .case_reader import parse_file
-from .columns import COLUMNS, ATTRIBUTES
+from .utils import COLUMNS, ATTRIBUTES
 
 
 class MPC(object):
