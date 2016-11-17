@@ -31,15 +31,16 @@ def to_dataframe(mpc):
     mpc_df = MPCDataFrame()
     for attribute in mpc_df._attributes:
         array = getattr(mpc, attribute, None)
-        if array.size == 1:
-            setattr(mpc_df, attribute, array.tostring())
-        else:
-            columns = COLUMNS.get(attribute, [i for i in range(0, array.shape[1])])
-            columns = columns[:array.shape[1]]
-            if array.shape[1] > len(columns):
-                columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, array.shape[1] - len(columns) + 1)]
-            df = pd.DataFrame(array, columns=columns)
-            setattr(mpc_df, attribute, df)
+        if array is not None:
+            if array.size == 1:
+                setattr(mpc_df, attribute, array.tostring())
+            else:
+                columns = COLUMNS.get(attribute, [i for i in range(0, array.shape[1])])
+                columns = columns[:array.shape[1]]
+                if array.shape[1] > len(columns):
+                    columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, array.shape[1] - len(columns) + 1)]
+                df = pd.DataFrame(array, columns=columns)
+                setattr(mpc_df, attribute, df)
     return mpc_df
 
 
