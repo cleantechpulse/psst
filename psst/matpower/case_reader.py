@@ -5,40 +5,41 @@ Python class to read a Matpower Case file
 Copyright (C) 2016 Dheepak Krishnamurthy
 """
 
-
-
 import os
-import re
 from builtins import open
 
 import numpy as np
+from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group
 
 
 def parse_file(attribute, string):
-
-    match = search_file(attribute, string)
-
-    if match is not None:
-        match = match.strip("'").strip('"')
-
-        _list = list()
-        for line in match.splitlines():
-            if line.strip():
-                _list.append(line.strip().strip(';').strip().split())
-
-        array = np.array(_list)
-        return array
+    if attribute in ['gen', 'gencost', 'bus', 'branch']:
+        return parse_table(attribute, string)
     else:
-        return match
+        return None
 
 
-def search_file(attribute, string):
-    pattern = 'mpc\.{}\s*=\s*[\[]?[\n]?(?P<data>.*?)[\n]?[\]]?;\n\n'.format(attribute)
+def parse_table(attribute, string):
 
-    match = re.search(pattern, string, re.DOTALL )
-    if match is not None:
-        return match.groupdict().get('data', None)
-    else:
-        return match
+    Float = Word(nums + '.' + '-' + '+')
+    Name = Word(alphanums)
+
+    NL = LineEnd()
+    Comments = Suppress(Literal('%')) + restOfLine
+    Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
+
+    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[')) + OneOrMore(Group(Line)) + Suppress(Keyword(']'))
+
+    result, i, j = Grammar.scanString(string).next()
+
+    _list = list()
+    for r in result:
+        _list.append([int_else_float(s) for s in r['data'].asList()])
+
+    return _list
 
 
+def int_else_float(s):
+    f = float(s)
+    i = int(f)
+    return i if i==f else f
