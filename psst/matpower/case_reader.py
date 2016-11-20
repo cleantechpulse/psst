@@ -9,25 +9,37 @@ import os
 from builtins import open
 
 import numpy as np
-from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group
+from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
 
 
 def parse_file(attribute, string):
     if attribute in ['gen', 'gencost', 'bus', 'branch']:
         return parse_table(attribute, string)
     else:
-        return None
+        return parse_line(attribute, string)
+
+
+def parse_line(attribute, string):
+    Float = Word(nums + '.' + '-' + '+')
+    Name = Word(alphanums)
+    String = Optional(Suppress("'")) + Word(printables, alphanums) + Optional(Suppress("'"))
+    NL = LineEnd()
+    Comments = Suppress(Literal('%')) + restOfLine
+
+    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';'))
+    result, i, j = Grammar.scanString(string).next()
+
+    return result['data'].asList()
 
 
 def parse_table(attribute, string):
-
     Float = Word(nums + '.' + '-' + '+')
     Name = Word(alphanums)
-
+    String = Optional(Suppress("'")) + Word(printables, alphanums) + Optional(Suppress("'"))
     NL = LineEnd()
     Comments = Suppress(Literal('%')) + restOfLine
-    Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
 
+    Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
     Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
 
     result, i, j = Grammar.scanString(string).next()
