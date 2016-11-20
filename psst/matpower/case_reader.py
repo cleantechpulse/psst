@@ -28,7 +28,7 @@ def parse_table(attribute, string):
     Comments = Suppress(Literal('%')) + restOfLine
     Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
 
-    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[')) + OneOrMore(Group(Line)) + Suppress(Keyword(']'))
+    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
 
     result, i, j = Grammar.scanString(string).next()
 
