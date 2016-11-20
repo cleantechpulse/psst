@@ -23,12 +23,12 @@ Comments = Suppress(Literal('%')) + restOfLine
 
 
 def parse_file(attribute, string):
-    if attribute in ['gen', 'gencost', 'bus', 'branch']:
+    if attribute in ['gen', 'gencost', 'bus', 'branch'] and attribute in string:
         return parse_table(attribute, string)
-    elif attribute in ['version', 'baseMVA']:
+    elif attribute in ['version', 'baseMVA'] and attribute in string:
         return parse_line(attribute, string)
     else:
-        logger.debug("Parser for mpc.%s is not implemented. Please contact the developer", attribute)
+        logger.debug("Unable to parse mpc.%s. Please check the input file or contact the developer.", attribute)
         return None
 
 
