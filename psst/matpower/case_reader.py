@@ -1,62 +1,53 @@
-# -*- coding: utf-8 -*-
+from __future__ import print_function, absolute_import
 
-"""
-Python class to read a Matpower Case file
-Copyright (C) 2016 Dheepak Krishnamurthy
-"""
-
-import os
-from builtins import open
+import re
 import logging
 
 import numpy as np
-from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
 
+from ..utils import int_else_float_except_string
 
+logging.basicConfig()
 logger = logging.getLogger(__file__)
 
-Float = Word(nums + '.' + '-' + '+' + 'e')
-Name = Word(alphanums)
-String = Optional(Suppress("'")) + Word(printables, alphanums) + Optional(Suppress("'"))
-NL = LineEnd()
-Comments = Suppress(Literal('%')) + restOfLine
+
+def find_attributes(string):
+    pattern = 'mpc\.(?P<attribute>.*?)\s*=\s*'
+    return re.findall(pattern, string, re.DOTALL)
 
 
 def parse_file(attribute, string):
-    if attribute in ['gen', 'gencost', 'bus', 'branch'] and attribute in string:
-        return parse_table(attribute, string)
-    elif attribute in ['version', 'baseMVA'] and attribute in string:
-        return parse_line(attribute, string)
+
+    match = search_file(attribute, string)
+
+    if match is not None:
+        match = match.strip("'").strip('"')
+
+        _list = list()
+        for line in match.splitlines():
+            line = line.split('%')[0]
+            if line.strip():
+                _list.append([int_else_float_except_string(s) for s in line.strip().strip(';').strip().split()])
+
+        return _list
     else:
-        logger.debug("Unable to parse mpc.%s. Please check the input file or contact the developer.", attribute)
+        return match
+
+
+def search_file(attribute, string):
+
+    if attribute in ['gen', 'gencost', 'bus', 'branch'] and attribute in string:
+        pattern = 'mpc\.{}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'.format(attribute)
+    elif attribute in ['version', 'baseMVA'] and attribute in string:
+        pattern = 'mpc\.{}\s*=\s*(?P<data>.*?);'.format(attribute)
+    else:
+        logger.warning('Unable to parse mpc.%s. Please contact the developer.', attribute)
         return None
 
-
-def parse_line(attribute, string):
-
-    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';'))
-    result, i, j = Grammar.scanString(string).next()
-
-    return [int_else_float(s) for s in result['data'].asList()]
+    match = re.search(pattern, string, re.DOTALL)
+    if match is not None:
+        return match.groupdict().get('data', None)
+    else:
+        return match
 
 
-def parse_table(attribute, string):
-    Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
-    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
-
-    result, i, j = Grammar.scanString(string).next()
-
-    _list = list()
-    for r in result:
-        _list.append([int_else_float(s) for s in r['data'].asList()])
-
-    return _list
-
-
-def int_else_float(s):
-    try:
-        f = float(s)
-        i = int(f)
-        return i if i==f else f
-    except ValueError:
-        return s

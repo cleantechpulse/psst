@@ -10,14 +10,13 @@ import os
 
 import pandas as pd
 
-from .case_reader import parse_file
-from .utils import COLUMNS, ATTRIBUTES
+from .case_reader import parse_file, find_attributes
+from .utils import COLUMNS
 
 
 class MPCDataFrame(object):
-    _attributes = ATTRIBUTES
-
     def __init__(self, filename=None, mode='r'):
+        self.ATTRIBUTES = []
         if filename is not None:
             self._filename = filename
             if mode == 'r' or mode == 'read':
@@ -33,7 +32,7 @@ def read_matpower(mpc):
     with open(os.path.abspath(mpc._filename)) as f:
         string = f.read()
 
-    for attribute in mpc._attributes:
+    for attribute in find_attributes(string):
         _list = parse_file(attribute, string)
         if _list is not None:
             if len(_list) == 1:
@@ -44,8 +43,10 @@ def read_matpower(mpc):
                 columns = columns[:cols]
                 if cols > len(columns):
                     columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, cols - len(columns) + 1)]
+                print(columns)
                 df = pd.DataFrame(_list, columns=columns)
                 setattr(mpc, attribute, df)
+            mpc.ATTRIBUTES.append(attribute)
 
     return mpc
 
