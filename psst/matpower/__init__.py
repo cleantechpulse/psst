@@ -36,13 +36,16 @@ def read_matpower(mpc):
     for attribute in mpc._attributes:
         _list = parse_file(attribute, string)
         if _list is not None:
-            cols = _max_cols(_list)
-            columns = COLUMNS.get(attribute, [i for i in range(0, cols)])
-            columns = columns[:cols]
-            if cols > len(columns):
-                columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, cols - len(columns) + 1)]
-            df = pd.DataFrame(_list, columns=columns)
-            setattr(mpc, attribute, df)
+            if len(_list) == 1:
+                setattr(mpc, attribute, _list[0])
+            else:
+                cols = _max_cols(_list)
+                columns = COLUMNS.get(attribute, [i for i in range(0, cols)])
+                columns = columns[:cols]
+                if cols > len(columns):
+                    columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, cols - len(columns) + 1)]
+                df = pd.DataFrame(_list, columns=columns)
+                setattr(mpc, attribute, df)
 
     return mpc
 

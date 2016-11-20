@@ -7,6 +7,7 @@ Copyright (C) 2016 Dheepak Krishnamurthy
 
 import os
 from builtins import open
+import warnings
 
 import numpy as np
 from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
@@ -15,8 +16,11 @@ from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfL
 def parse_file(attribute, string):
     if attribute in ['gen', 'gencost', 'bus', 'branch']:
         return parse_table(attribute, string)
-    else:
+    elif attribute in ['version', 'baseMVA']:
         return parse_line(attribute, string)
+    else:
+        warnings.warn('Parser for attribute {} is not implemented. Please contact developer'.format(attribute))
+        return None
 
 
 def parse_line(attribute, string):
@@ -29,7 +33,7 @@ def parse_line(attribute, string):
     Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';'))
     result, i, j = Grammar.scanString(string).next()
 
-    return result['data'].asList()
+    return [int_else_float(s) for s in result['data'].asList()]
 
 
 def parse_table(attribute, string):
@@ -52,6 +56,9 @@ def parse_table(attribute, string):
 
 
 def int_else_float(s):
-    f = float(s)
-    i = int(f)
-    return i if i==f else f
+    try:
+        f = float(s)
+        i = int(f)
+        return i if i==f else f
+    except ValueError:
+        return s
