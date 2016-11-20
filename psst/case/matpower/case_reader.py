@@ -5,7 +5,7 @@ import logging
 
 import numpy as np
 
-from ..utils import int_else_float_except_string
+from ...utils import int_else_float_except_string
 
 logging.basicConfig()
 logger = logging.getLogger(__file__)

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-
 """
 Python class to read a Matpower Case file
 Copyright (C) 2016 Dheepak Krishnamurthy
 """
+
+from __future__ import print_function, absolute_import
 
 import os
 from builtins import open
@@ -12,7 +13,7 @@ import logging
 import numpy as np
 from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
 
-from ..utils import int_else_float_except_string
+from ...utils import int_else_float_except_string
 
 logger = logging.getLogger(__file__)
 
