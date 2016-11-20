@@ -7,10 +7,13 @@ Copyright (C) 2016 Dheepak Krishnamurthy
 
 import os
 from builtins import open
-import warnings
+import logging
 
 import numpy as np
 from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
+
+
+logger = logging.getLogger(__file__)
 
 
 def parse_file(attribute, string):
@@ -19,7 +22,7 @@ def parse_file(attribute, string):
     elif attribute in ['version', 'baseMVA']:
         return parse_line(attribute, string)
     else:
-        warnings.warn('Parser for attribute {} is not implemented. Please contact developer'.format(attribute))
+        logger.debug("Parser for mpc.%s is not implemented. Please contact the developer", attribute)
         return None
 
 
