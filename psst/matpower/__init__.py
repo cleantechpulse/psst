@@ -43,7 +43,6 @@ def read_matpower(mpc):
                 columns = columns[:cols]
                 if cols > len(columns):
                     columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, cols - len(columns) + 1)]
-                print(columns)
                 df = pd.DataFrame(_list, columns=columns)
                 setattr(mpc, attribute, df)
             mpc.ATTRIBUTES.append(attribute)
