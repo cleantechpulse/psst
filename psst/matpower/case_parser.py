@@ -12,6 +12,7 @@ import logging
 import numpy as np
 from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
 
+from ..utils import int_else_float_except_string
 
 logger = logging.getLogger(__file__)
 
@@ -37,7 +38,7 @@ def parse_line(attribute, string):
     Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';') + Optional(Comments))
     result, i, j = Grammar.scanString(string).next()
 
-    return [int_else_float(s) for s in result['data'].asList()]
+    return [int_else_float_except_string(s) for s in result['data'].asList()]
 
 
 def parse_table(attribute, string):
@@ -48,15 +49,7 @@ def parse_table(attribute, string):
 
     _list = list()
     for r in result:
-        _list.append([int_else_float(s) for s in r['data'].asList()])
+        _list.append([int_else_float_except_string(s) for s in r['data'].asList()])
 
     return _list
 
-
-def int_else_float(s):
-    try:
-        f = float(s)
-        i = int(f)
-        return i if i==f else f
-    except ValueError:
-        return s
