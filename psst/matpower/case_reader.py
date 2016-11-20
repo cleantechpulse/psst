@@ -22,12 +22,15 @@ def parse_file(attribute, string):
 
     if match is not None:
         match = match.strip("'").strip('"')
-
         _list = list()
         for line in match.splitlines():
             line = line.split('%')[0]
+            line = line.replace(';', '')
             if line.strip():
-                _list.append([int_else_float_except_string(s) for s in line.strip().strip(';').strip().split()])
+                if attribute == 'bus_name':
+                    _list.append([line.strip()])
+                else:
+                    _list.append([int_else_float_except_string(s) for s in line.strip().split()])
 
         return _list
     else:
@@ -36,10 +39,12 @@ def parse_file(attribute, string):
 
 def search_file(attribute, string):
 
-    if attribute in ['gen', 'gencost', 'bus', 'branch'] and attribute in string:
-        pattern = 'mpc\.{}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'.format(attribute)
-    elif attribute in ['version', 'baseMVA'] and attribute in string:
-        pattern = 'mpc\.{}\s*=\s*(?P<data>.*?);'.format(attribute)
+    if attribute in ['gen', 'gencost', 'bus', 'branch']:
+        pattern = r'mpc\.{}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'.format(attribute)
+    elif attribute in ['version', 'baseMVA']:
+        pattern = r'mpc\.{}\s*=\s*(?P<data>.*?);'.format(attribute)
+    elif attribute == 'bus_name':
+        pattern = r'mpc\.{}\s*=\s*\{{[\n]?(?P<data>.*?)[\n]?\}};'.format('bus_name')
     else:
         logger.warning('Unable to parse mpc.%s. Please contact the developer.', attribute)
         return None
