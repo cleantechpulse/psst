@@ -67,6 +67,11 @@ class IndexDescriptor(Descriptor):
         raise AttributeError('IndexDescriptor does not have attribute')
 
 
+class Name(Descriptor):
+    name = 'name'
+    ty = str
+
+
 class Version(Descriptor):
     name = 'version'
     ty = str
@@ -90,7 +95,8 @@ class BusName(IndexDescriptor):
         return instance.bus.index
 
     def setattributeindex(self, instance, value):
-        instance.bus.index = value
+        # instance.bus.index = value
+        pass
 
 
 class Branch(Descriptor):
@@ -124,9 +130,12 @@ class GenName(IndexDescriptor):
     ty = pd.Index
 
     def getattributeindex(self, instance):
-        if not all(instance.gen.index == instance.gencost.index):
-            logger.warning('Indices for attributes `gen` and `gencost` do not match. `gen` index will be mapped to `gencost` index')
-            instance.gencost.index = instance.gen.index
+        try:
+            if not all(instance.gen.index == instance.gencost.index):
+                logger.warning('Indices for attributes `gen` and `gencost` do not match. `gen` index will be mapped to `gencost` index')
+                instance.gencost.index = instance.gen.index
+        except AttributeError:
+            logger.debug('Unable to map `gen` indices to `gencost`')
         return instance.gen.index
 
     def setattributeindex(self, instance, value):

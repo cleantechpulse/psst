@@ -11,6 +11,10 @@ logging.basicConfig()
 logger = logging.getLogger(__file__)
 
 
+def find_name(string):
+    return re.search('function\s*mpc\s*=\s*(?P<data>.*?)\n', string).groupdict()['data']
+
+
 def find_attributes(string):
     pattern = 'mpc\.(?P<attribute>.*?)\s*=\s*'
     return re.findall(pattern, string, re.DOTALL)

@@ -12,6 +12,6 @@ import os
 
 import pandas as pd
 
-from .reader import parse_file, find_attributes
+from .reader import parse_file, find_attributes, find_name
 from .utils import COLUMNS
 
