@@ -2,21 +2,23 @@ import os
 import six
 import pandas as pd
 
-from .descriptors import String, Float, StringList, DataFrame, List
+from .descriptors import (Version, BaseMVA, BusName, Bus, Branch,
+                        Gen, GenName, GenCost, _Attributes)
 
 from . import matpower
 
 
 class PSSTCase(object):
 
-    version = String('version')
-    baseMVA = Float('baseMVA')
-    bus_name = StringList('bus_name')
-    bus = DataFrame('bus')
-    gen = DataFrame('gen')
-    branch = DataFrame('branch')
-    gencost = DataFrame('gencost')
-    _attributes = List('_attributes')
+    version = Version()
+    baseMVA = BaseMVA()
+    bus = Bus()
+    bus_name = BusName()
+    branch = Branch()
+    gen = Gen()
+    gencost = GenCost()
+    gen_name = GenName()
+    _attributes = _Attributes()
 
     def __init__(self, filename, mode='r'):
         self._attributes = list()
