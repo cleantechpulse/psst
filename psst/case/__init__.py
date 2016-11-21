@@ -30,21 +30,23 @@ class PSSTCase(object):
                 self._read_matpower(self)
 
     def __repr__(self):
+        name = getattr(self, 'name', None)
         gen_name = getattr(self, 'gen_name', None)
         bus_name = getattr(self, 'bus_name', None)
         branch_name = getattr(self, 'branch_name', None)
-        gen_string = '{} Generators'.format(len(gen_name)) if gen_name is not None else ''
-        bus_string = '{} Buses'.format(len(bus_name)) if bus_name is not None else ''
-        branch_string = '{} Branches'.format(len(branch_name)) if branch_name is not None else ''
-        l = [s for s in [gen_string, bus_string, branch_string] if s != '']
+        name_string = 'name={}'.format(name) if name is not None else ''
+        gen_string = 'Generators={}'.format(len(gen_name)) if gen_name is not None else ''
+        bus_string = 'Buses={}'.format(len(bus_name)) if bus_name is not None else ''
+        branch_string = 'Branches={}'.format(len(branch_name)) if branch_name is not None else ''
+        l = [s for s in [name_string, gen_string, bus_string, branch_string] if s != '']
         if len(l) > 1:
-            repr_string = ' with ' + ', '.join(l[:-1]) + ' and ' + l[-1]
+            repr_string = ', '.join(l)
         elif len(l) == 1:
-            repr_string = ' with ' + l[0]
+            repr_string = l[0]
         else:
             repr_string = ''
 
-        return '<{}.{} {} at {}>'.format(
+        return '<{}.{}({}) at {}>'.format(
                     self.__class__.__module__,
                     self.__class__.__name__,
                     repr_string,
