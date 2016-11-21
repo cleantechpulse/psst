@@ -44,7 +44,7 @@ class PSSTCase(object):
         else:
             repr_string = ''
 
-        return '<{}.{} object{} at {}>'.format(
+        return '<{}.{} {} at {}>'.format(
                     self.__class__.__module__,
                     self.__class__.__name__,
                     repr_string,
@@ -73,6 +73,7 @@ class PSSTCase(object):
                     if cols > len(columns):
                         columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, cols - len(columns) + 1)]
                     df = pd.DataFrame(_list, columns=columns)
+                    df.index = df.index + 1  # this is to account for matlab 1 indexing
                     setattr(mpc, attribute, df)
                 mpc._attributes.append(attribute)
 

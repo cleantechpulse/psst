@@ -95,8 +95,11 @@ class BusName(IndexDescriptor):
         return instance.bus.index
 
     def setattributeindex(self, instance, value):
-        # instance.bus.index = value
-        pass
+        bus_name = instance.bus.index
+        instance.branch['F_BUS'] = instance.branch['F_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
+        instance.branch['T_BUS'] = instance.branch['T_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
+        instance.gen['GEN_BUS'] = instance.gen['GEN_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
+        instance.bus.index = value
 
 
 class Branch(Descriptor):
@@ -136,6 +139,8 @@ class GenName(IndexDescriptor):
                 instance.gencost.index = instance.gen.index
         except AttributeError:
             logger.debug('Unable to map `gen` indices to `gencost`')
+        except ValueError:
+            logger.debug('Unable to compare `gen` indices to `gencost`')
         return instance.gen.index
 
     def setattributeindex(self, instance, value):
