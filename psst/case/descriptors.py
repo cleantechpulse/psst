@@ -41,7 +41,8 @@ class IndexDescriptor(Descriptor):
 
     def __get__(self, instance, cls):
         try:
-            return getattr(instance, self.name.replace('_name', '')).index
+            index = self.getattributeindex(instance)
+            return index
         except AttributeError:
             super().__get__(instance, cls)
 
@@ -53,11 +54,17 @@ class IndexDescriptor(Descriptor):
             value = pd.Index(value.iloc[:, 0].rename(self.name))
 
         try:
-            getattr(instance, self.name.replace('_name', '')).index = value
+            self.setattributeindex(instance, value)
         except AttributeError:
             logger.debug('AttributeError on instance.{} when setting index as {}'.format(self.name.replace('_name', ''), self.name))
 
         super().__set__(instance, value)
+
+    def getattributeindex(self, instance):
+        raise AttributeError('IndexDescriptor does not have attribute')
+
+    def setattributeindex(self, instance):
+        raise AttributeError('IndexDescriptor does not have attribute')
 
 
 class Version(Descriptor):
@@ -79,10 +86,27 @@ class BusName(IndexDescriptor):
     name = 'bus_name'
     ty = pd.Index
 
+    def getattributeindex(self, instance):
+        return instance.bus.index
+
+    def setattributeindex(self, instance, value):
+        instance.bus.index = value
+
 
 class Branch(Descriptor):
     name = 'branch'
     ty = pd.DataFrame
+
+
+class BranchName(IndexDescriptor):
+    name = 'branch_name'
+    ty = pd.Index
+
+    def getattributeindex(self, instance):
+        return instance.branch.index
+
+    def setattributeindex(self, instance, value):
+        instance.branch.index = value
 
 
 class Gen(Descriptor):
@@ -98,6 +122,16 @@ class GenCost(Descriptor):
 class GenName(IndexDescriptor):
     name = 'gen_name'
     ty = pd.Index
+
+    def getattributeindex(self, instance):
+        if not all(instance.gen.index == instance.gencost.index):
+            logger.warning('Indices for attributes `gen` and `gencost` do not match. `gen` index will be mapped to `gencost` index')
+            instance.gencost.index = instance.gen.index
+        return instance.gen.index
+
+    def setattributeindex(self, instance, value):
+        instance.gen.index = value
+        instance.gencost.index = value
 
 
 class _Attributes(Descriptor):

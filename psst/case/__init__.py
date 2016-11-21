@@ -2,7 +2,7 @@ import os
 import six
 import pandas as pd
 
-from .descriptors import (Version, BaseMVA, BusName, Bus, Branch,
+from .descriptors import (Version, BaseMVA, BusName, Bus, Branch, BranchName,
                         Gen, GenName, GenCost, _Attributes)
 
 from . import matpower
@@ -15,6 +15,7 @@ class PSSTCase(object):
     bus = Bus()
     bus_name = BusName()
     branch = Branch()
+    branch_name = BranchName()
     gen = Gen()
     gencost = GenCost()
     gen_name = GenName()
