@@ -28,7 +28,7 @@ def parse_file(attribute, string):
             line = line.replace(';', '')
             if line.strip():
                 if attribute == 'bus_name':
-                    _list.append([line.strip()])
+                    _list.append([line.strip().strip("'")])
                 else:
                     _list.append([int_else_float_except_string(s) for s in line.strip().split()])
 

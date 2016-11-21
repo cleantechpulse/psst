@@ -18,10 +18,16 @@ class Descriptor(object):
     def __set__(self, instance, value):
         if self.ty is not None and not isinstance(value, self.ty):
             value = self.ty(value)
-        instance.__dict__[self.name] = value
+        if self._is_valid(instance, value):
+            instance.__dict__[self.name] = value
+        else:
+            raise AttributeError('Validation for {} failed. Please check {}'.format(self.name, value))
 
     def __delete__(self, instance):
         raise AttributeError("Cannot delete attribute {}".format(self.name))
+
+    def _is_valid(self, instance, value):
+        return True
 
 
 class Version(Descriptor):
