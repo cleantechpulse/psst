@@ -11,7 +11,11 @@ requirements = [
     'sphinx>=1.4.1',
     'ghp-import>=0.4.1',
     'sphinxcontrib-fulltoc>=1.1',
-    'sphinxcontrib-jsdemo>=0.1.4'
+    'sphinxcontrib-jsdemo>=0.1.4',
+    'pandas',
+    'future',
+    'networkx',
+    'matplotlib',
 ]
 
 test_requirements = [
