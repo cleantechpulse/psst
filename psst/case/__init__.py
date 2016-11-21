@@ -46,11 +46,10 @@ class PSSTCase(object):
         else:
             repr_string = ''
 
-        return '<{}.{}({}) at {}>'.format(
+        return '<{}.{}({})>'.format(
                     self.__class__.__module__,
                     self.__class__.__name__,
                     repr_string,
-                    hex(id(self))
                 )
 
     @classmethod
