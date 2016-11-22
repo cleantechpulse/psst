@@ -1,11 +1,15 @@
 import os
+import logging
+
 from builtins import super
 import pandas as pd
 
 from .descriptors import (Name, Version, BaseMVA, BusName, Bus, Branch, BranchName,
-                        Gen, GenName, GenCost, _Attributes)
+                        Gen, GenName, GenCost, Load, Period, _Attributes)
 
 from . import matpower
+
+logger = logging.getLogger(__name__)
 
 
 class PSSTCase(object):
@@ -20,6 +24,8 @@ class PSSTCase(object):
     gen = Gen()
     gencost = GenCost()
     gen_name = GenName()
+    load = Load()
+    period = Period()
     _attributes = _Attributes()
 
     def __init__(self, filename, mode='r'):
@@ -53,7 +59,7 @@ class PSSTCase(object):
                 )
 
     @classmethod
-    def _read_matpower(cls, mpc):
+    def _read_matpower(cls, mpc, auto_assign_names=True):
 
         if not isinstance(mpc, cls):
             filename = mpc
@@ -72,13 +78,26 @@ class PSSTCase(object):
                     columns = matpower.COLUMNS.get(attribute, [i for i in range(0, cols)])
                     columns = columns[:cols]
                     if cols > len(columns):
-                        columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(0, cols - len(columns) + 1)]
+                        if attribute != 'gencost':
+                            logger.warning('Number of columns greater than expected number.')
+                        columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(cols - len(columns), -1, -1)]
                     df = pd.DataFrame(_list, columns=columns)
-                    df.index = df.index + 1  # this is to account for matlab 1 indexing
+
+                    if attribute == 'bus':
+                        df.set_index('BUS_I',inplace=True)
+
                     setattr(mpc, attribute, df)
                 mpc._attributes.append(attribute)
 
         mpc.name = matpower.find_name(string)
+
+        if auto_assign_names is True:
+            mpc.bus_name = mpc.bus_name
+            mpc.gen_name = mpc.gen_name
+            mpc.branch_name = mpc.branch_name
+
+        if mpc.bus_name.intersection(mpc.gen_name).values.size != 0:
+            logger.warning('Bus and Generator names may be identical. This could cause issues when plotting.')
 
         return mpc
 

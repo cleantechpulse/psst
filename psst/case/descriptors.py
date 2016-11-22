@@ -2,11 +2,11 @@ from __future__ import print_function
 from collections import OrderedDict
 import logging
 
+import traceback
 from builtins import super
 import six
 
 import pandas as pd
-
 
 logger = logging.getLogger(__name__)
 logging.basicConfig()
@@ -57,6 +57,7 @@ class IndexDescriptor(Descriptor):
             self.setattributeindex(instance, value)
         except AttributeError:
             logger.debug('AttributeError on instance.{} when setting index as {}'.format(self.name.replace('_name', ''), self.name))
+            logger.debug(traceback.format_exc())
 
         super().__set__(instance, value)
 
@@ -99,7 +100,16 @@ class BusName(IndexDescriptor):
         instance.branch['F_BUS'] = instance.branch['F_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
         instance.branch['T_BUS'] = instance.branch['T_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
         instance.gen['GEN_BUS'] = instance.gen['GEN_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
+
+        try:
+            instance.load.columns = value
+        except AttributeError:
+            instance.load = pd.DataFrame(0, index=range(0, 1),columns=value, dtype='float')
+
         instance.bus.index = value
+
+        if isinstance(instance.bus_name, pd.RangeIndex) or isinstance(instance.bus_name, pd.Int64Index):
+            instance.bus_name = ['Bus{}'.format(b) for b in instance.bus_name]
 
 
 class Branch(Descriptor):
@@ -147,7 +157,42 @@ class GenName(IndexDescriptor):
         instance.gen.index = value
         instance.gencost.index = value
 
+        if isinstance(instance.gen_name, pd.RangeIndex) or isinstance(instance.bus_name, pd.Int64Index):
+            instance.gen_name = ['GenCo{}'.format(g) for g in instance.gen_name]
+
+
+class Load(Descriptor):
+    name = 'load'
+    ty = pd.DataFrame
+
+    def __set__(self, instance, value):
+        try:
+            matching_indices = set(instance.bus_name).intersection(set(value.columns)) == set(value.columns)
+        except:
+            raise AttributeError("Unable to set load. Please check that columns in load match bus names")
+
+        if matching_indices:
+            super().__set__(instance, value)
+        else:
+            raise AttributeError("Unable to set load. Please check that columns in load match bus names")
+
+
+
+class Period(IndexDescriptor):
+    name = 'period'
+    ty = pd.Index
+
+    def getattributeindex(self, instance):
+        return instance.load.index
+
+    def setattributeindex(self, instance, value):
+        hour = instance.load.index
+        instance.bus.index = value
+        # TODO : Convert to DateTimeIndex
+
+
 
 class _Attributes(Descriptor):
     name = '_attributes'
     ty = list
+
