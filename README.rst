@@ -30,6 +30,8 @@ Features
 * Security Constrained Economic Dispatch
 * Integration with Pyomo, Pandas, Numpy, Scipy, Matplotlib, NetworkX and D3.js
 
+.. image:: examples/unit_commitment_and_dispatch.png
+
 `psst` supports:
 
 * Wholesale power market modeling

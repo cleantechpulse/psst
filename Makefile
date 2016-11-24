@@ -91,6 +91,7 @@ deploydocs: ## generate Sphinx HTML documentation, including API docs
 	rm -rf docs/_build
 	sphinx-apidoc -e -M -F -o docs psst
 	$(MAKE) -C docs html
+	cp -r examples docs/_build/html/
 	git branch -D gh-pages || echo 'No gh-pages exists'
 	git checkout --orphan gh-pages
 	ghp-import -n -b gh-pages -m "Update documentation" docs/_build/html
