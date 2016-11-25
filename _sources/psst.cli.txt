@@ -1,0 +1,7 @@
+psst.cli module
+===============
+
+.. automodule:: psst.cli
+    :members:
+    :undoc-members:
+    :show-inheritance:

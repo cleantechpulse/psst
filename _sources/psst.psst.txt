@@ -1,0 +1,7 @@
+psst.psst module
+================
+
+.. automodule:: psst.psst
+    :members:
+    :undoc-members:
+    :show-inheritance:

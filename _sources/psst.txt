@@ -1,0 +1,25 @@
+psst package
+============
+
+.. automodule:: psst
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    psst.case
+
+Submodules
+----------
+
+.. toctree::
+
+   psst.cli
+   psst.plot
+   psst.psst
+   psst.utils
+

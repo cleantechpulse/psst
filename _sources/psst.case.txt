@@ -1,0 +1,22 @@
+psst.case package
+=================
+
+.. automodule:: psst.case
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    psst.case.matpower
+
+Submodules
+----------
+
+.. toctree::
+
+   psst.case.descriptors
+

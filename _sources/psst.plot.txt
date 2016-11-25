@@ -1,0 +1,7 @@
+psst.plot module
+================
+
+.. automodule:: psst.plot
+    :members:
+    :undoc-members:
+    :show-inheritance:

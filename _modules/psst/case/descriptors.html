@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>psst.case.descriptors &#8212; psst 0.1.1a documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/jsdemo.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/jsdemo.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/plotting.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="psst 0.1.1a documentation" href="../../../index.html" />
+    <link rel="up" title="psst.case" href="../case.html" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+<script type="text/javascript">
+   console.log('Loading javascript')
+</script>
+
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for psst.case.descriptors</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">super</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="Descriptor"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.Descriptor">[docs]</a><span class="k">class</span> <span class="nc">Descriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">{}</span><span class="s2">&#39; object has no attribute </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ty</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ty</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ty</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Validation for </span><span class="si">{}</span><span class="s1"> failed. Please check </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__delete__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Cannot delete attribute </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="IndexDescriptor"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.IndexDescriptor">[docs]</a><span class="k">class</span> <span class="nc">IndexDescriptor</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getattributeindex</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__get__</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="c1"># Assume the first column in the dataframe as index.</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setattributeindex</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;AttributeError on instance.</span><span class="si">{}</span><span class="s1"> when setting index as </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__set__</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IndexDescriptor.getattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.IndexDescriptor.getattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">getattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;IndexDescriptor does not have attribute&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IndexDescriptor.setattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.IndexDescriptor.setattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">setattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;IndexDescriptor does not have attribute&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Name"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.Name">[docs]</a><span class="k">class</span> <span class="nc">Name</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Version"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.Version">[docs]</a><span class="k">class</span> <span class="nc">Version</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;version&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="BaseMVA"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BaseMVA">[docs]</a><span class="k">class</span> <span class="nc">BaseMVA</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;baseMVA&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="nb">float</span></div>
+
+
+<div class="viewcode-block" id="Bus"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.Bus">[docs]</a><span class="k">class</span> <span class="nc">Bus</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bus&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></div>
+
+
+<div class="viewcode-block" id="BusName"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BusName">[docs]</a><span class="k">class</span> <span class="nc">BusName</span><span class="p">(</span><span class="n">IndexDescriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bus_name&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span>
+
+<div class="viewcode-block" id="BusName.getattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BusName.getattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">getattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">index</span></div>
+
+<div class="viewcode-block" id="BusName.setattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BusName.setattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">setattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">bus_name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">branch</span><span class="p">[</span><span class="s1">&#39;F_BUS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">branch</span><span class="p">[</span><span class="s1">&#39;F_BUS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">bus_name</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">branch</span><span class="p">[</span><span class="s1">&#39;T_BUS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">branch</span><span class="p">[</span><span class="s1">&#39;T_BUS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">bus_name</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">gen</span><span class="p">[</span><span class="s1">&#39;GEN_BUS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">gen</span><span class="p">[</span><span class="s1">&#39;GEN_BUS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">value</span><span class="p">[</span><span class="n">bus_name</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">value</span></div></div>
+
+
+<div class="viewcode-block" id="Branch"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.Branch">[docs]</a><span class="k">class</span> <span class="nc">Branch</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;branch&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></div>
+
+
+<div class="viewcode-block" id="BranchName"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BranchName">[docs]</a><span class="k">class</span> <span class="nc">BranchName</span><span class="p">(</span><span class="n">IndexDescriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;branch_name&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span>
+
+<div class="viewcode-block" id="BranchName.getattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BranchName.getattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">getattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">branch</span><span class="o">.</span><span class="n">index</span></div>
+
+<div class="viewcode-block" id="BranchName.setattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.BranchName.setattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">setattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">branch</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">value</span></div></div>
+
+
+<div class="viewcode-block" id="Gen"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.Gen">[docs]</a><span class="k">class</span> <span class="nc">Gen</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;gen&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></div>
+
+
+<div class="viewcode-block" id="GenCost"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.GenCost">[docs]</a><span class="k">class</span> <span class="nc">GenCost</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;gencost&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></div>
+
+
+<div class="viewcode-block" id="GenName"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.GenName">[docs]</a><span class="k">class</span> <span class="nc">GenName</span><span class="p">(</span><span class="n">IndexDescriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;gen_name&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span>
+
+<div class="viewcode-block" id="GenName.getattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.GenName.getattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">getattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">gen</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">instance</span><span class="o">.</span><span class="n">gencost</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Indices for attributes `gen` and `gencost` do not match. `gen` index will be mapped to `gencost` index&#39;</span><span class="p">)</span>
+                <span class="n">instance</span><span class="o">.</span><span class="n">gencost</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">gen</span><span class="o">.</span><span class="n">index</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Unable to map `gen` indices to `gencost`&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Unable to compare `gen` indices to `gencost`&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">instance</span><span class="o">.</span><span class="n">gen</span><span class="o">.</span><span class="n">index</span></div>
+
+<div class="viewcode-block" id="GenName.setattributeindex"><a class="viewcode-back" href="../../../psst.case.descriptors.html#psst.case.descriptors.GenName.setattributeindex">[docs]</a>    <span class="k">def</span> <span class="nf">setattributeindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">gen</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">gencost</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">value</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">_Attributes</span><span class="p">(</span><span class="n">Descriptor</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;_attributes&#39;</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="nb">list</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testcases.html">Test cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../case.html">psst.case</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Dheepak Krishnamurthy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>psst.case.descriptors module &#8212; psst 0.1.1a documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/jsdemo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/jsdemo.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/plotting.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="psst 0.1.1a documentation" href="index.html" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+<script type="text/javascript">
+   console.log('Loading javascript')
+</script>
+
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-psst.case.descriptors">
+<span id="psst-case-descriptors-module"></span><h1>psst.case.descriptors module<a class="headerlink" href="#module-psst.case.descriptors" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="psst.case.descriptors.BaseMVA">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">BaseMVA</code><a class="reference internal" href="_modules/psst/case/descriptors.html#BaseMVA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BaseMVA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.BaseMVA.name">
+<code class="descname">name</code><em class="property"> = 'baseMVA'</em><a class="headerlink" href="#psst.case.descriptors.BaseMVA.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.BaseMVA.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.BaseMVA.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">float</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.Branch">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">Branch</code><a class="reference internal" href="_modules/psst/case/descriptors.html#Branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.Branch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.Branch.name">
+<code class="descname">name</code><em class="property"> = 'branch'</em><a class="headerlink" href="#psst.case.descriptors.Branch.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.Branch.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.Branch.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.BranchName">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">BranchName</code><a class="reference internal" href="_modules/psst/case/descriptors.html#BranchName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BranchName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.IndexDescriptor" title="psst.case.descriptors.IndexDescriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.IndexDescriptor</span></code></a></p>
+<dl class="method">
+<dt id="psst.case.descriptors.BranchName.getattributeindex">
+<code class="descname">getattributeindex</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#BranchName.getattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BranchName.getattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.BranchName.name">
+<code class="descname">name</code><em class="property"> = 'branch_name'</em><a class="headerlink" href="#psst.case.descriptors.BranchName.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="psst.case.descriptors.BranchName.setattributeindex">
+<code class="descname">setattributeindex</code><span class="sig-paren">(</span><em>instance</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#BranchName.setattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BranchName.setattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.BranchName.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.BranchName.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Index</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.Bus">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">Bus</code><a class="reference internal" href="_modules/psst/case/descriptors.html#Bus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.Bus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.Bus.name">
+<code class="descname">name</code><em class="property"> = 'bus'</em><a class="headerlink" href="#psst.case.descriptors.Bus.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.Bus.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.Bus.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.BusName">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">BusName</code><a class="reference internal" href="_modules/psst/case/descriptors.html#BusName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BusName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.IndexDescriptor" title="psst.case.descriptors.IndexDescriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.IndexDescriptor</span></code></a></p>
+<dl class="method">
+<dt id="psst.case.descriptors.BusName.getattributeindex">
+<code class="descname">getattributeindex</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#BusName.getattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BusName.getattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.BusName.name">
+<code class="descname">name</code><em class="property"> = 'bus_name'</em><a class="headerlink" href="#psst.case.descriptors.BusName.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="psst.case.descriptors.BusName.setattributeindex">
+<code class="descname">setattributeindex</code><span class="sig-paren">(</span><em>instance</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#BusName.setattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.BusName.setattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.BusName.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.BusName.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Index</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.Descriptor">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">Descriptor</code><a class="reference internal" href="_modules/psst/case/descriptors.html#Descriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.Descriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.Descriptor.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#psst.case.descriptors.Descriptor.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.Descriptor.ty">
+<code class="descname">ty</code><em class="property"> = None</em><a class="headerlink" href="#psst.case.descriptors.Descriptor.ty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.Gen">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">Gen</code><a class="reference internal" href="_modules/psst/case/descriptors.html#Gen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.Gen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.Gen.name">
+<code class="descname">name</code><em class="property"> = 'gen'</em><a class="headerlink" href="#psst.case.descriptors.Gen.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.Gen.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.Gen.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.GenCost">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">GenCost</code><a class="reference internal" href="_modules/psst/case/descriptors.html#GenCost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.GenCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.GenCost.name">
+<code class="descname">name</code><em class="property"> = 'gencost'</em><a class="headerlink" href="#psst.case.descriptors.GenCost.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.GenCost.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.GenCost.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">DataFrame</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.GenName">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">GenName</code><a class="reference internal" href="_modules/psst/case/descriptors.html#GenName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.GenName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.IndexDescriptor" title="psst.case.descriptors.IndexDescriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.IndexDescriptor</span></code></a></p>
+<dl class="method">
+<dt id="psst.case.descriptors.GenName.getattributeindex">
+<code class="descname">getattributeindex</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#GenName.getattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.GenName.getattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.GenName.name">
+<code class="descname">name</code><em class="property"> = 'gen_name'</em><a class="headerlink" href="#psst.case.descriptors.GenName.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="psst.case.descriptors.GenName.setattributeindex">
+<code class="descname">setattributeindex</code><span class="sig-paren">(</span><em>instance</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#GenName.setattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.GenName.setattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.GenName.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.GenName.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Index</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.IndexDescriptor">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">IndexDescriptor</code><a class="reference internal" href="_modules/psst/case/descriptors.html#IndexDescriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.IndexDescriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="method">
+<dt id="psst.case.descriptors.IndexDescriptor.getattributeindex">
+<code class="descname">getattributeindex</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#IndexDescriptor.getattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.IndexDescriptor.getattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="psst.case.descriptors.IndexDescriptor.setattributeindex">
+<code class="descname">setattributeindex</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/psst/case/descriptors.html#IndexDescriptor.setattributeindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.IndexDescriptor.setattributeindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.Name">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">Name</code><a class="reference internal" href="_modules/psst/case/descriptors.html#Name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.Name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.Name.name">
+<code class="descname">name</code><em class="property"> = 'name'</em><a class="headerlink" href="#psst.case.descriptors.Name.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.Name.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.Name.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">str</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="psst.case.descriptors.Version">
+<em class="property">class </em><code class="descclassname">psst.case.descriptors.</code><code class="descname">Version</code><a class="reference internal" href="_modules/psst/case/descriptors.html#Version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#psst.case.descriptors.Version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psst.case.descriptors.Descriptor" title="psst.case.descriptors.Descriptor"><code class="xref py py-class docutils literal"><span class="pre">psst.case.descriptors.Descriptor</span></code></a></p>
+<dl class="attribute">
+<dt id="psst.case.descriptors.Version.name">
+<code class="descname">name</code><em class="property"> = 'version'</em><a class="headerlink" href="#psst.case.descriptors.Version.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="psst.case.descriptors.Version.ty">
+<code class="descname">ty</code><a class="headerlink" href="#psst.case.descriptors.Version.ty" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">str</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Test cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/psst.case.descriptors.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Dheepak Krishnamurthy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/psst.case.descriptors.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
